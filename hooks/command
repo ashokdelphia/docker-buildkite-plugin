@@ -208,6 +208,13 @@ while IFS='=' read -r name _ ; do
   fi
 done < <(env | sort)
 
+# Parse build args and add them to the docker args
+while IFS='=' read -r name _ ; do
+  if [[ $name =~ ^(BUILDKITE_PLUGIN_DOCKER_BUILD_ARG_[0-9]+) ]] ; then
+    args+=( "--build-arg" "${!name}" )
+  fi
+done < <(env | sort)
+
 # Parse host mappings and add them to the docker args
 while IFS='=' read -r name _ ; do
   if [[ $name =~ ^(BUILDKITE_PLUGIN_DOCKER_ADD_HOST_[0-9]+) ]] ; then

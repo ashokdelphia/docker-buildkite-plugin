@@ -11,6 +11,8 @@ configuration:
       type: array
     always-pull:
       type: boolean
+    build-arg:
+      type: array
     command:
       type: array
     debug:
